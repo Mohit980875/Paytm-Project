@@ -11,7 +11,7 @@ const signupBody = zod.object({
     username : zod.string(),
     firstName: zod.string(),
     lastName: zod.string(),
-    password:zod.string().min(6)  
+    password:zod.string() 
     
 })
 
@@ -58,7 +58,7 @@ userRouter.post("/signup", async function (req,res) {
 
 const signinBody = zod.object({
     username : zod.string().email(),
-    password : zod.string().min(6)
+    password : zod.string()
 })
 
 userRouter.post("/signin", async function (req,res) {
@@ -85,7 +85,7 @@ userRouter.post("/signin", async function (req,res) {
 })
 
 const updateBody = zod.object({
-    password : zod.string().optional().min(6),
+    password : zod.string().optional(),
     lastName  : zod.string().optional(),
     firstName : zod.string().optional()
 })
