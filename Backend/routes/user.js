@@ -20,7 +20,7 @@ userRouter.post("/signup", async function (req,res) {
     const {success} = signupBody.safeParse(req.body);
 
     if(!success){
-        res.json({msg :"Email already taken / Incorrect inputs"}).status(411);
+        return res.json({msg :"Email already taken / Incorrect inputs"}).status(411);
     }
 
     const existingUser = await User.findOne({
@@ -28,10 +28,10 @@ userRouter.post("/signup", async function (req,res) {
     })
 
     if(existingUser){
-        res.json({msg :"Email already taken / Incorrect inputs"}).status(411);
+        return res.json({msg :"Email already taken / Incorrect inputs"}).status(411);
     }
 
-    const user = await User.createOne({
+    const user = await User.create({
         username : req.body.username,
         firstName : req.body.firstName,
         lastName : req.body.lastName,
@@ -41,7 +41,7 @@ userRouter.post("/signup", async function (req,res) {
      const userId = user._id;
 
      // Creating new Account
-     await Account.createOne({
+     await Account.create({
         userId : userId,
         balance :1 + Math.random()*10000
      })
@@ -65,7 +65,7 @@ userRouter.post("/signin", async function (req,res) {
 
     const {success} =signinBody.safeParse(req.body);
     if(!success){
-        res.json({msg:"Error while logging in"}).status(411);
+       return res.json({msg:"Error while logging in"}).status(411);
     }
 
     const existingUser = await User.findOne({
@@ -95,7 +95,7 @@ userRouter.put("/",authMiddleware, async function (req,res) {
     const {success}= updateBody.safeParse(req.body);
 
     if(!success){
-        res.status(411).json({
+       return res.status(411).json({
             msg : "Error while updating information"
         })
     }
