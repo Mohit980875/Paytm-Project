@@ -9,7 +9,7 @@ function authMiddleware(req,res,next) {
     
     
     if(!authtoken || !authtoken.startsWith("Bearer")){
-        return res.status(403).json({});
+        return res.status(403).json({msg:"Invalid token"});
     }
     const token = authtoken.split(" ")[1];
 
